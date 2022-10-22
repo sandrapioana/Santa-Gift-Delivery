@@ -1,0 +1,173 @@
+## Pirvanescu Sandra-Ioana 321CA
+
+
+#Partea a 2-a a proiectului
+
+Pentru o mai buna intelegere, am lasat si README-ul etapei 1.
+
+#Design Pattern-uri noi
+Pe langa Design Pattern-urile Strategy si Factory folosite la etapa 1, am adaugat
+Singleton la clasa SantaClaus care permite numai o instantiere a acestuia. Acest
+lucru este posibil deoarece in aceasta clasa am listele de copii si cadouri
+care se actualizeaza, a unui singur distribuitor de cadou, care poate fi vazuta
+ca o baza de date unde se actualizeaza componentele.
+De asemenea, am folosit Design Pattern-ul Builder pentru implementarea scorului
+bonus.
+
+#Modificari si adaugiri
+Modificari au fot facute asupra entitatilor si a citirii din fisierul de input.
+Pentru entitatea copil, am adaugat un camp pentru elf si am creat o clasa
+de tip Builder pentru scorul copilului, cu sau fara scorul bonus.
+De asemenea, am adaugat un camp in clasele destinate Gift ce reprezinta
+cantitatea cadoului. Deoarece in output nu trebuie sa afisez cantitatea
+acestuia la care a fost distribuit, am creat o noua clasa, GiftOutput,
+in care retin numele, pretul si categoria.
+Pentru AnnualChanges, am adaugat un camp pentru strategia din fiecare an.
+Pentru a stabili ce strategie se foloseste in fiecare an, am folosit si
+in acest caz Design Pattern-urile Strategy si Factory.
+Pentru ca au aparut modificari la nivelul scorului, metoda "calculateScore"
+in functie de tipul de copil s-a modificat, adaugand scorul bonus daca exista.
+De asemenea, pentru elfi am folosit Strategy si Factory, exceptand cazul
+in care copilul are alocat elful galben. In cazul in care e galben, nu rezulta
+o strategie si se rezolva cerinta dupa distributia cadourilor tuturor
+copiilor.
+Pentru a se face modificati asupra bugetului, dupa determinarea strategiei, am
+calculat noul buget in metoda "modifyBudget".
+
+#IdStrategy
+Pentru aceasta strategie, am sortat lista de copii crescator in functie de id, am sortat cadourile
+in ordine crescatoare a preturilor si, in functie de preferintele acestuia si de buget,
+i-am distribuit cadouri. Daca acesta nu a primit cadouri si are elful galben atribuit,
+atunci va fi adaugat in lista copiilor cu acete proprietati. Dupa distribuirea cadourilor
+catre toti copii, am parcurs lista de copii care nu au primit cadouri si le-am distribuit
+un cadou din categoria preferata daca a fost posibil.
+
+#NiceScoreStrategy
+Pentru aceasta strategie, am sortat lista de copii crescator in functie de id, am sortat cadourile
+in ordine crescatoare a preturilor si apoi am calculat scorurile copiilor, ulterior ordonand
+in ordine descrescatoare copii in functie de acesta. In functie de preferintele acestuia si de buget,
+i-am distribuit cadouri. Daca acesta nu a primit cadouri si are elful galben atribuit,
+atunci va fi adaugat in lista copiilor cu acete proprietati. Dupa distribuirea cadourilor
+catre toti copii, am parcurs lista de copii care nu au primit cadouri si le-am distribuit
+un cadou din categoria preferata daca a fost posibil.
+
+#NiceScoreCityStrategy
+Pentru aceasta strategie, am luat toti copii, am aflat toate orasele din care sunt si apoi am mai
+luat o data lista de copii pentru a insuma scorurile pentru fiecare oras. Dupa insumarea scorurilor,
+am facut media aritmetica a acestora si am setat media orasului. In functie de aceasta, am ordonat
+orasele in ordine decrescatoare. Copii au fost sortati in functie de id-uri. Cel de-al doilea
+criteriu de sortare al oraselor a fost lexico-grafic. Am luat fiecare oras pe rand dupa ordonare
+si lista de copii. Cand am gasit un copil din orasul actual, am distribuit cadouri in functie de
+preferintele acestuia si de buget. Daca acesta nu a primit cadouri si are elful galben atribuit,
+atunci va fi adaugat in lista copiilor cu acete proprietati. Dupa distribuirea cadourilor
+catre toti copii, am parcurs lista de copii care nu au primit cadouri si le-am distribuit
+un cadou din categoria preferata daca a fost posibil.
+
+
+
+#Partea a 1-a a proiectului - README
+
+#Entitati
+Am cret Child si Gift pentru a tine informatiile despre fiecare copil si
+fiecare cadou pe care le primesc ca input. Ca si clase auxiliare, unde tin
+exact ce primesc in input, am creat clasele ChildInput si GiftInput.
+Diferenta dintre cele doua perechi este ca in cea simpla (Child si Gift)
+se stocheaza si informatii ulterioare. Spre exemplu, in copil voi stoca, pe
+langa informatiile din input, si istoricul scorurilor copilului respectiv.
+De asemenea, in Child voi avea metoda care calculeaza bugetul copilului
+(adica suma maxima pe care o poate folosi Mos Craciun pentru a-i oferi
+copilului cadouri).
+
+
+#Design Pattern-uri
+Ca Design Pattern-uri, am folosit Strategy Pattern si Factory Pattern.
+Cu ajutorul Pattern-ului Factory, am creat strategia in functie de varsta
+copilului. Exista 3 strategii (in functie de varsta): Baby Strategy, Kid
+Strategy si Teen Strategy. In fiecare dintre acestea se verifica initial
+daca in input am primit un scor nou(diferit de null). Daca in input am primit
+la scor null, atunci scorul dat l-am setat la 11. Dupa calcularea scorului mediu,
+prin media ceruta in enunt, am setat scorul la valoarea 11 deoarece pentru copii
+care nu au fost actualizati si nu au primit un nou scor in urmatorul an, sa nu
+se duplice scorul din anul precedent. Inainte de calcularea scorului mediu,
+daca se respecta conditia de a fi diferit de null si de a avea un scor nou dat
+in input, se adauga noul scor in istoricul scorurilor. Dupa calcularea scorului
+mediu se seteaza in campul copilului respectiv scorul mediu care va fi folosit
+ulterior pentru a determina budgetUnit-ul si bugetul alocat copilului.
+
+#Input, Input Loader, AnnualChange si ChildUpdate
+In clasa Input am campuri pentru fiecare element dat in input.
+In InputLoader s-au citit datele din input. Am creat doua metoda, cea de-a
+doua fiind apelata in prima. Cea de-a doua metoda citeste toate schimbarile
+care vor fi realizate de-a lungul anilor in care Mos Craciun imparte cadouri.
+Prima metoda va citi, in primul rand, datele initiale date in input, adica in
+runda 0.
+Clasele AnnualChange si ChildUpdate sunt utilizate pentru a stoca datele din
+input cu privire la schimbarile anuale. Clasa AnnualChange contine o lista
+cu entitati ale clasei ChildUpdate, aceasta reprezentand o lista cu schimbari
+aduse copiilor deja existenti in lista de copii a lui Mos Craciun.
+De asemenea, exista un buget nou al lui Mos Craciun, o lista noua de cadouri
+si copii noi care vor fi adaugati in lista acestuia de copii.
+
+#ChildOutput
+Clasa aceasta tine informatiile care trebuie afisate in output pentru fiecare
+copil din lista lui Mos Craciun. Odata cu parcurgerea listei de copii si
+actualizarii fiecarui camp al acestei clase pentru un copil, se va adauga in
+lista care va fi trimisa spre output. Spre output se va da o lista care contine
+elemente de acest tip.
+
+#Comparators si Utils
+Am creat aceasta clasa ce contine la randul ei 2 clase interne pentru a putea
+sorta copii in functie de ID (in ordine crescatoare) si cadourile in functie de
+pretul acestora (de asemenea, in ordine crescatoare).
+In Utils, avem o metoda ce transforma un array de JSON-uri intr-un array de
+Stringuri pentru a citi inputurile, De asemenea, am creat o metoda
+ce calculeaza bugetele tuturor copiilor din lista Mosului. Am creat 2 metode
+ce transforma listele de ChildInput si GiftInput in liste de Child, respectiv
+Gift.
+Pe langa acestea, am creat o metoda ce actualizeaza informatiile despre un copil
+existent in lista lui Mos Craciun asupra caruia s-au facut modificari intr-un
+AnnualChange.
+
+#SantaClaus
+Aceasta clasa poate fi asociata cu o baza de date in care se tin informatiile
+de actualitate cu privire la program. In aceasta se stocheaza bugetul de care
+Mos Craciun dispune, un camp ce tine budgetUnit-ul, lista de copii pentru care
+Mos Craciun trebuie sa ofere cadouri si lista de cadouri in care se tin
+informatii despre cadourile pe care acesta le poate oferi.
+In fiecare an, aceste campuri sunt actualizate.
+Exista 3 metode care ajuta la rezolvarea temei.
+Metoda calculateBudgetUnit calculeaza budgetUnit-ul anului in care Mos Craciun
+imparte cadouri folosindu-se de scorurile calculate cu ajutorul pattern-ului
+Strategy.
+Cea de-a doua metoda este updateInfo care primeste ca parametru un AnnualChange.
+Prin aceasta metoda se realizeaza schimbarile de la an la an. Se schimba
+bugetul Mosului, se actualizeaza lista de cadouri, se adauga copii noi si
+informatiile despre acestia si se fac actualizari cu privire la copii deja
+existenti cu privire la scorurile lor si noile preferinte de cadouri.
+Cea de-a treia metoda este changeAge care, inainte de adaugarea copiilor noi,
+incrementeaza varsta copiilor deja existenti. Astfel, se realizeaza trecerea
+la urmatorul an.
+Cea de-a patra metoda este cea care returneaza lista de ChildOutput.
+Se sorteaza copii in functie de ID, se sorteaza cadourile in functie de pret
+apoi se calculeaza scorul mediu al fiecarui copil. Apoi se calculeaza
+budgetUnit-ul anului respectiv si nugetul fiecarui copil. In continuare,
+se ia fiecare copil, se trece prin lista acestuia de preferinte si daca
+se gaseste un cadou care e din categoria din are este preferinta lui, se
+adauga in lista de cadouri primite si se scade din bugetul acelui copil
+pretul cadoului oferit. Odata ce se ofera un cadou dintr-o preferinta
+a copilului, se trece la urmatoarea, pana nu mai exista si bugetul este
+mai mare ca pretul celui mai ieftin cadou din acea categorie.
+
+
+#Writer si Main
+In Writer am creat 2 metode pentru afisarea output-ului. Prima transforma o
+lista de ChildOutput intr-un obiect JSON care se adauga intr-un array de
+JSONObject in Main, iar cea de-a doua metoda transforma array-ul de
+obiecte JSON intr-un JSONObject. Pentru a afisa output-ul si a inchide
+fisierul am creat metoda closeJSON, unde folosesc un ObjectMapper
+pentru a respecta formatul de output.
+In Main, am apelat pentru fiecare fisier de input metoda resolve pentru
+care am facut un fisier de out unde se scrie output-ul conform cerintei
+(out_X.json, unde X este numarul testului). Metoda resolve rezolva initial
+runda 0, apoi, in functie de numarul de ani pe care se desfasoara testul,
+realizeaza rezolvarea temei.
